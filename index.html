@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Te amo ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pacifico&family=Playfair+Display:ital,wght@1,500&family=Courier+Prime&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080610;
+    overflow: hidden;
+    height: 100vh;
+}
+
+#lluvia {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+}
+
+.palabra {
+    position: absolute;
+    top: -100px;
+    white-space: nowrap;
+    animation: caer linear forwards;
+    user-select: none;
+    text-shadow: 0 0 8px currentColor,
+                 0 0 15px currentColor;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+.centro {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+    pointer-events: none;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: white;
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(35px, 9vw, 65px);
+    text-shadow: 0 0 15px #ff3c9e,
+                 0 0 35px #ff006a;
+    animation: latido 2s infinite;
+}
+
+p {
+    color: #ffb6d9;
+    font-size: 18px;
+    margin-top: 15px;
+    text-shadow: 0 0 10px #ff1493;
+}
+
+@keyframes latido {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* Corazones */
+
+.corazon {
+    position: fixed;
+    pointer-events: none;
+    z-index: 20;
+    animation: flotar 2s ease-out forwards;
+    text-shadow: 0 0 15px currentColor;
+}
+
+@keyframes flotar {
+    0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(
+            calc(-50% + var(--x)),
+            calc(-50% - 150px)
+        ) scale(1.5);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="lluvia"></div>
+
+
+
+<script>
+
+const idiomas = [
+    "Te amo",
+    "I love you",
+    "Je t'aime",
+    "Ti amo",
+    "Ich liebe dich",
+    "Eu te amo",
+    "愛してる",
+    "사랑해",
+    "Я тебя люблю",
+    "أنا أحبك",
+    "我爱你",
+    "Ik hou van jou",
+    "Seni seviyorum",
+    "Σ' αγαπώ",
+    "Mahal kita",
+    "Nakupenda",
+    "Kocham cię",
+    "Jeg elsker dig",
+    "Aš tave myliu",
+    "Volim te",
+    "Te quiero",
+    "Minä rakastan sinua"
+];
+
+const colores = [
+    "#ff4d9d",
+    "#ff1744",
+    "#ff80ab",
+    "#d500f9",
+    "#b388ff",
+    "#00e5ff",
+    "#ffea00",
+    "#ffffff",
+    "#ff9100",
+    "#69f0ae"
+];
+
+const fuentes = [
+    "Arial",
+    "Courier Prime",
+    "Playfair Display",
+    "Georgia",
+    "Pacifico",
+    "Press Start 2P"
+];
+
+const contenedor = document.getElementById("lluvia");
+
+function crearPalabra() {
+
+    const palabra = document.createElement("div");
+
+    palabra.className = "palabra";
+
+    palabra.textContent =
+        idiomas[Math.floor(Math.random() * idiomas.length)];
+
+    palabra.style.left = Math.random() * 100 + "vw";
+
+    palabra.style.color =
+        colores[Math.floor(Math.random() * colores.length)];
+
+    const fuente =
+        fuentes[Math.floor(Math.random() * fuentes.length)];
+
+    palabra.style.fontFamily = fuente;
+
+    // Letras pixeladas más pequeñas para que quepan
+    if (fuente === "Press Start 2P") {
+        palabra.style.fontSize =
+            (Math.random() * 3 + 8) + "px";
+    } else {
+        palabra.style.fontSize =
+            (Math.random() * 18 + 14) + "px";
+    }
+
+    const duracion = Math.random() * 5 + 5;
+
+    palabra.style.animationDuration = duracion + "s";
+
+    contenedor.appendChild(palabra);
+
+    setTimeout(() => palabra.remove(), duracion * 1000);
+}
+
+setInterval(crearPalabra, 130);
+
+for (let i = 0; i < 35; i++) {
+    setTimeout(crearPalabra, i * 100);
+}
+
+
+// CORAZONES AL TOCAR
+
+function crearCorazones(x, y) {
+
+    const simbolos = ["❤️", "💕", "💗", "💖", "💘"];
+
+    for (let i = 0; i < 8; i++) {
+
+        const corazon = document.createElement("div");
+
+        corazon.className = "corazon";
+
+        corazon.textContent =
+            simbolos[Math.floor(Math.random() * simbolos.length)];
+
+        corazon.style.left = x + "px";
+        corazon.style.top = y + "px";
+
+        corazon.style.fontSize =
+            (Math.random() * 20 + 15) + "px";
+
+        corazon.style.setProperty(
+            "--x",
+            (Math.random() * 180 - 90) + "px"
+        );
+
+        document.body.appendChild(corazon);
+
+        setTimeout(() => corazon.remove(), 2000);
+    }
+}
+
+document.addEventListener("pointerdown", (e) => {
+    crearCorazones(e.clientX, e.clientY);
+});
+
+</script>
+
+</body>
+</html>
